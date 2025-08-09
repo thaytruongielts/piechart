@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện Tập IELTS Writing Task 1 (Pie Chart)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+            text-align: center;
+        }
+        .slide {
+            display: none;
+        }
+        .slide.active {
+            display: block;
+        }
+        h2 {
+            color: #333;
+        }
+        .image-container {
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #555;
+        }
+        textarea {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 80px;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        .controls button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 0 5px;
+        }
+        .controls button:hover {
+            background-color: #0056b3;
+        }
+        .answer-container {
+            margin-top: 20px;
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            display: none;
+        }
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+        }
+        #slide-counter {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Luyện Tập IELTS Writing Task 1 (Pie Chart)</h2>
+    <div id="slides-container">
+        <div class="slide active" data-slide-id="1">
+            <div class="image-container">
+                <img src="https://via.placeholder.com/600x400.png?text=Biểu+đồ+1" alt="Biểu đồ 1">
+            </div>
+            <div class="question">Biểu đồ cho thấy ...</div>
+            <textarea placeholder="Viết câu trả lời của bạn tại đây..."></textarea>
+            <div class="answer-container">
+                <p><strong>Đáp án:</strong></p>
+                <p class="correct-answer">The pie chart illustrates...</p>
+            </div>
+        </div>
+
+        <div class="slide" data-slide-id="2">
+            <div class="image-container">
+                <img src="https://via.placeholder.com/600x400.png?text=Biểu+đồ+2" alt="Biểu đồ 2">
+            </div>
+            <div class="question">Phần lớn nhất trong biểu đồ là ...</div>
+            <textarea placeholder="Viết câu trả lời của bạn tại đây..."></textarea>
+            <div class="answer-container">
+                <p><strong>Đáp án:</strong></p>
+                <p class="correct-answer">The largest proportion shown in the chart is...</p>
+            </div>
+        </div>
+
+        <div class="slide" data-slide-id="3">
+            <div class="image-container">
+                <img src="https://via.placeholder.com/600x400.png?text=Biểu+đồ+3" alt="Biểu đồ 3">
+            </div>
+            <div class="question">Ngược lại, phần nhỏ nhất chiếm ...</div>
+            <textarea placeholder="Viết câu trả lời của bạn tại đây..."></textarea>
+            <div class="answer-container">
+                <p><strong>Đáp án:</strong></p>
+                <p class="correct-answer">In contrast, the smallest share accounts for...</p>
+            </div>
+        </div>
+        
+        <div class="slide" data-slide-id="25">
+            <div class="image-container">
+                <img src="https://via.placeholder.com/600x400.png?text=Biểu+đồ+25" alt="Biểu đồ 25">
+            </div>
+            <div class="question">Tóm lại, ...</div>
+            <textarea placeholder="Viết câu trả lời của bạn tại đây..."></textarea>
+            <div class="answer-container">
+                <p><strong>Đáp án:</strong></p>
+                <p class="correct-answer">In conclusion,...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="slide-counter">1/25</div>
+    
+    <div class="controls">
+        <button id="prevBtn">Quay lại</button>
+        <button id="submitBtn">Nộp bài</button>
+        <button id="nextBtn">Tiếp tục</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const slideCounter = document.getElementById('slide-counter');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+            slideCounter.textContent = `${index + 1}/${slides.length}`;
+            
+            // Ẩn/hiện nút "Nộp bài" và "Đáp án"
+            const activeSlide = slides[index];
+            const answerContainer = activeSlide.querySelector('.answer-container');
+            answerContainer.style.display = 'none';
+            
+            // Ẩn nút "Tiếp tục" nếu chưa nộp bài
+            if (activeSlide.dataset.submitted !== 'true') {
+                nextBtn.style.display = 'none';
+            } else {
+                nextBtn.style.display = 'inline-block';
+            }
+        }
+
+        prevBtn.addEventListener('click', function() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+
+        nextBtn.addEventListener('click', function() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+
+        submitBtn.addEventListener('click', function() {
+            const activeSlide = slides[currentSlide];
+            const answerContainer = activeSlide.querySelector('.answer-container');
+            
+            // Hiển thị đáp án
+            answerContainer.style.display = 'block';
+            
+            // Đánh dấu slide đã nộp bài
+            activeSlide.dataset.submitted = 'true';
+            
+            // Hiện nút "Tiếp tục"
+            nextBtn.style.display = 'inline-block';
+        });
+
+        // Khởi tạo trạng thái ban đầu
+        showSlide(currentSlide);
+    });
+</script>
+
+</body>
+</html>
